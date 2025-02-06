@@ -14,6 +14,19 @@
             "v1.0": "初版"
         }
     },
+    "Alist2StrmPro": {
+        "name": "Alist2StrmPro",
+        "description": "从alist生成strm文件，支持多目录。",
+        "labels": "整理",
+        "version": "1.0",
+        "icon": "https://raw.githubusercontent.com/JaylenMar/MoviePilot-Plugins/main/icons/Alist.png",
+        "author": "JaylenMar",
+        "level": 2,
+        "v2": true,
+        "history": {
+            "v1.0": "初版"
+        }
+    },
     "Alist2Strm": {
         "name": "Alist2Strm",
         "description": "从alist生成strm文件。",
