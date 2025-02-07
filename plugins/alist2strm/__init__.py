@@ -25,12 +25,12 @@ from app.plugins import _PluginBase
 from apscheduler.schedulers.background import BackgroundScheduler
 from apscheduler.triggers.cron import CronTrigger
 
-from plugins.alist2strm.alist import AlistClient, AlistFile
+from plugins.alist2strm2.alist import AlistClient, AlistFile
 
 
-class Alist2Strm(_PluginBase):
+class Alist2Strm2(_PluginBase):
     # 插件名称
-    plugin_name = "Alist2Strm"
+    plugin_name = "Alist2Strm2"
     # 插件描述
     plugin_desc = "从alist生成strm。"
     # 插件图标
@@ -42,7 +42,7 @@ class Alist2Strm(_PluginBase):
     # 作者主页
     author_url = "https://github.com/yubanmeiqin9048"
     # 插件配置项ID前缀
-    plugin_config_prefix = "alist2strm_"
+    plugin_config_prefix = "alist2strm2_"
     # 加载顺序
     plugin_order = 32
     # 可使用的用户级别
@@ -97,7 +97,7 @@ class Alist2Strm(_PluginBase):
             if self._onlyonce:
                 self._scheduler = BackgroundScheduler(timezone=settings.TZ)
                 self._scheduler.add_job(
-                    self.alist2strm,
+                    self.alist2strm2,
                     "date",
                     run_date=datetime.now(tz=pytz.timezone(settings.TZ))
                     + timedelta(seconds=3),
@@ -109,17 +109,17 @@ class Alist2Strm(_PluginBase):
                     self._scheduler.start()
             self.__update_config()
 
-    def alist2strm(self) -> None:
+    def alist2strm2(self) -> None:
         try:
             self.__max_download_sem = asyncio.Semaphore(self._max_download_worker)
             self.__max_list_sem = asyncio.Semaphore(self._max_list_worker)
             self.__iter_tasks_done = asyncio.Event()
-            logger.info("Alist2Strm 插件开始执行")
+            logger.info("Alist2Strm2 插件开始执行")
             asyncio.run(self.__process())
-            logger.info("Alist2Strm 插件执行完成")
+            logger.info("Alist2Strm2 插件执行完成")
         except Exception as e:
             logger.error(
-                f"Alist2Strm 插件执行出错：{str(e)} - {traceback.format_exc()}"
+                f"Alist2Strm2 插件执行出错：{str(e)} - {traceback.format_exc()}"
             )
 
     def __filter_func(self, remote_path: AlistFile) -> bool:
@@ -341,10 +341,10 @@ class Alist2Strm(_PluginBase):
         if self.get_state():
             return [
                 {
-                    "id": "Alist2strm",
+                    "id": "Alist2strm2",
                     "name": "全量生成STRM",
                     "trigger": CronTrigger.from_crontab(self._cron),
-                    "func": self.alist2strm,
+                    "func": self.alist2strm2,
                     "kwargs": {},
                 }
             ]
